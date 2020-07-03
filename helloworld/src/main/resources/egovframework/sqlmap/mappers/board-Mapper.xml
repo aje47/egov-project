@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="board-Mapper">
+	
+	<select id="getBoardList" resultType="board">
+		SELECT *
+		  FROM board;
+	</select>
+	
+	<insert id="insertPosts">
+		INSERT INTO board
+		VALUES (
+			#{id},
+			#{subject},
+			#{context},
+			#{attachments},
+			0,
+			0,
+			now(),
+			null
+		);
+	</insert>
+	
+	<update id="updateViews">
+		UPDATE board
+		   SET views = views + 1
+		 WHERE id = #{id}
+	</update>
+	
+	<select id="selectBoardDetail" resultType="board">
+		SELECT *
+		  FROM board
+		 WHERE id = #{id}		
+	</select>
+	
+	<delete id="deletePosts">
+		DELETE
+		  FROM board
+		 WHERE id = #{id}
+	</delete>
+	
+	<update id="updatePosts">
+		UPDATE board
+		   SET subject = '${subject}',
+		   	   context = '${context}',
+		   	   update_time = now()
+		 WHERE id = #{id}
+	</update>
+</mapper>
